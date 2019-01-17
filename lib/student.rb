@@ -35,10 +35,10 @@ class Student
   def save
     save = <<-SQL
     INSERT INTO students (name, grade)
-    VALUES (?, ?)
+    VALUES (#{self.name}, #{self.grade})
     SQL
 
-    DB[:conn].execute(save, self.name, self.grade)
+    DB[:conn].execute(save)
 
     @id = DB[:conn].execute("SELECT last_insert_rowid() FROM students")[0][0]
   end
@@ -47,6 +47,6 @@ class Student
     student=Student.new(name, grade)
     student.save
     student
-  end 
+  end
 
 end
